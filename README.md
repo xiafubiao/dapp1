@@ -39,9 +39,9 @@ npm create vite@latest dapp1
 You can choose **JavaScript** and **React** as framework options in the question list. In your project folder, install the realted modules.
 
 ```c++
-Cd dapp1
+cd dapp1
 
-Npm install
+npm install
 ```
 
 Now edit the `App.jsx` file, and create a button on your web page to generate an attestation.
