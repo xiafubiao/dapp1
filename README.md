@@ -7,14 +7,82 @@ MPC-TLS is a cryptographic protocol that runs between an Interent data source se
 
 Check the [documents](https://docs.padolabs.org/mpc-tls/tech-intro) for more technical details about MPC-TLS.
 
-## The Steps
+## The Tutorial
 
+**Preparation**
+
+We shall install node.js before creating the project. 
+
+You can either use Homebrew 
+```java
+brew install node
 ```
+or install with node package manager
+```java
+# installs nvm (Node Version Manager)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+
+# download and install Node.js (you may need to restart the terminal)
+nvm install 20
+
+# verifies the right Node.js version is in the environment
+node -v # should print `v20.18.0`
+
+# verifies the right npm version is in the environment
+npm -v # should print `10.8.2`
+```
+**The Steps**
+We use vite and React as the frameworks to create a dapp project. 
+```java
 npm create vite@latest dapp1
 ```
+You can choose **JavaScript** and **React** as framework options in the question list. In your project folder, install the realted modules.
 
-```
+```java
 Cd dapp1
 
 Npm install
 ```
+
+Now edit the `App.jsx` file, and create a button on your web page to generate an attestation.
+
+```java
+function App() {
+...
+    return(
+    <div className="card">
+        <button  onClick={attst}>
+          Attest my web data through MPC-TLS
+        </button>
+      </div>
+    )
+}
+...
+```
+
+Now you can define the actions that the function `attst()` shall take, i.e., create an attestation through MPC-TLS SDK. Basically, you can define `attst()` within the `App()` function like this. Remember to call the `initAttestation()` function before generating attestations.
+
+```java
+const attst = async () => {
+    const sdkInstance = new MPCTLSJSSDK();
+    
+    try {
+      const initAttestaionResult = await sdkInstance.initAttestation(
+        "localhost" // this param shall be your "AppSymbol" like a domain name,
+                    // which is registered with PADO's Attestors.
+      );
+     
+      const startAttestaionResult = await sdkInstance.startAttestation({
+        chainID: 56, // BNB Chain
+        walletAddress: "0x",  // the wallet address of the subject
+        attestationTypeID: "9", // type ID "9" means it's an Binance asset proof
+        assetsBalance: "50", // a constant value to be compared with your asset balance: balance > 50
+      });      
+    } catch (e) {
+      alert(`attestation failed,code: ${e.code} ,message: ${e.message}`);
+    }
+    
+    
+  }
+```
+Now execute the code to deploy your dapp at localhost, and click the button on the web page to see what will happens. Note you shall log into the Binance website prior to execute the MPC-TLS protocol at the pop-up window.

@@ -12,31 +12,32 @@ function App() {
   const [address, setAddress] = useState();
   const [chainName, setChainName] = useState();
   const [attestation, setAttestation] = useState();
+  const [x, setX] = useState();
 
   // add MPC-TLS here
 
-  const attst = async (connectedAddress) => {
+  const attst = async () => {
     const sdkInstance = new MPCTLSJSSDK();
+    
     try {
       const initAttestaionResult = await sdkInstance.initAttestation(
-        "localhost"
+        "localhost" // this param shall be your "AppSymbol" like a domain name,
+                    //which is registered with PADO's Attestors.
       );
-      console.log(connectedAddress+"");
+     
       const startAttestaionResult = await sdkInstance.startAttestation({
         chainID: 56,
-        walletAddress: "0xc814b5AACFB7F3400e90FFa4fC6BF5169E221f61",
-        attestationTypeID: "9",
-        assetsBalance: "99",
+        walletAddress: address,
+        attestationTypeID: "9", //asset proof
+        assetsBalance: "50", //BNB Chain
       });
-      console.log("init: "+ initAttestaionResult); //Output: true
-
-      console.log("start: "+ startAttestaionResult);
-
-      
+      setAttestation(startAttestaionResult);
+      console.log(attestation);
     } catch (e) {
       alert(`attestation failed,code: ${e.code} ,message: ${e.message}`);
     }
-
+    
+    
   }
 
 
@@ -48,18 +49,16 @@ function App() {
     const signer = await provider.getSigner();
     const address = await signer.getAddress();
 
-    console.log(window.ethereum.selectedAddress);
-
-    await setAddress(address);
     console.log(address);
+
+    setAddress(address);
+    
 
   };
 
-  /*
-  const openWebSource = async () => {
-    window.open('https://www.binance.com');
-    attst(address);
-  }*/
+  const handleClick = () => {
+    setX(attestation);
+  };
 
   return (
     <div>
@@ -77,19 +76,28 @@ function App() {
       <div className="card2">
         <button  onClick={attst}>
           Attest my web data through MPC-TLS
-          <br />
-        { <a>{attestation}</a>}
-        <br />
         </button>
       </div>
 
 
       <hr />
 
-      <div className="card3">
-        hello, this is a test to show the MPC-TLS SDK!
-      </div>
+      <div>
+    
+
+     
+      <textarea value={JSON.stringify(x, null, 2)} readOnly rows="8" cols="50"></textarea>
+      <br /><br />
+
+  
+      <button onClick={handleClick}>Show the attestation result</button>
     </div>
+
+
+
+  
+
+</div>
   )
 }
 
