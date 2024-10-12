@@ -86,3 +86,5 @@ const attst = async () => {
   }
 ```
 Now execute the code to deploy your dapp at localhost, and click the button on the web page to see what will happens. Note you shall log into the Binance website prior to execute the MPC-TLS protocol at the pop-up window.
+
+In our `src` folder, I create a simple demo that allows you to connect with your Metamask wallet, and then create a Binance asset attestation with that wallet address, and show the attestation result on the web page.
