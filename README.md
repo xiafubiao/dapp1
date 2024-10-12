@@ -3,7 +3,7 @@
 This demo shows how to create a MPC-TLS data attestation (proof) and further be verified on-chain within a mini dApp. For more details about MPC-TLS SDK, you may refer to this [repo](https://github.com/pado-labs/mpctls-js-sdk) and the [document](https://docs.padolabs.org/mpc-tls/mpc-tls-sdk/overview).
 
 ## About MPC-TLS 
-MPC-TLS is a cryptographic protocol that runs between an Interent data source server, a client and a Attestor(or notary) through the [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) protocol. Eventually, MPC-TLS protocol outputs verified data (so-called "attestation" or "web proof") by the client, where the data is validated and signed by the verifier for its authenticity regarding to its data source. In PADO's MPC-TLS technique, the data is represented in a privacy-preserving manner, e.g., the data could be a form of "I has more than 100 followers in x.com" when the client retrives his number of followers from X.com without actually explosuring the exact number.
+MPC-TLS is a cryptographic protocol that runs between an Interent data source server, a client and an attestor (notary) through the [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) protocol. Eventually, MPC-TLS protocol outputs verified data (so-called "attestation" or "web proof") by the client, where the data is validated and signed by the verifier for its authenticity regarding to its data source. In PADO's MPC-TLS technique, the data is represented in a privacy-preserving manner, e.g., the data could be a form of "I has more than 100 followers in x.com" when the client retrives his number of followers from X.com without actually explosuring the exact number.
 
 Check the [documents](https://docs.padolabs.org/mpc-tls/tech-intro) for more technical details about MPC-TLS.
 
@@ -11,13 +11,13 @@ Check the [documents](https://docs.padolabs.org/mpc-tls/tech-intro) for more tec
 
 **Preparation**
 
-We shall install node.js before creating the project. 
+We shall install **node.js** before creating the project. 
 
 You can either use Homebrew 
 ```c++
 brew install node
 ```
-or install with node package manager
+or install with **node package manager**
 ```c++
 # installs nvm (Node Version Manager)
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
@@ -32,6 +32,7 @@ node -v # should print `v20.18.0`
 npm -v # should print `10.8.2`
 ```
 **The Steps**
+
 We use vite and React as the frameworks to create a dapp project. 
 ```c++
 npm create vite@latest dapp1
@@ -39,9 +40,9 @@ npm create vite@latest dapp1
 You can choose **JavaScript** and **React** as framework options in the question list. In your project folder, install the realted modules.
 
 ```c++
-Cd dapp1
+cd dapp1
 
-Npm install
+npm install
 ```
 
 Now edit the `App.jsx` file, and create a button on your web page to generate an attestation.
