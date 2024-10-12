@@ -14,11 +14,11 @@ Check the [documents](https://docs.padolabs.org/mpc-tls/tech-intro) for more tec
 We shall install node.js before creating the project. 
 
 You can either use Homebrew 
-```java
+```c++
 brew install node
 ```
 or install with node package manager
-```java
+```c++
 # installs nvm (Node Version Manager)
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
 
@@ -33,12 +33,12 @@ npm -v # should print `10.8.2`
 ```
 **The Steps**
 We use vite and React as the frameworks to create a dapp project. 
-```java
+```c++
 npm create vite@latest dapp1
 ```
 You can choose **JavaScript** and **React** as framework options in the question list. In your project folder, install the realted modules.
 
-```java
+```c++
 Cd dapp1
 
 Npm install
@@ -46,7 +46,7 @@ Npm install
 
 Now edit the `App.jsx` file, and create a button on your web page to generate an attestation.
 
-```java
+```c++
 function App() {
 ...
     return(
@@ -62,7 +62,7 @@ function App() {
 
 Now you can define the actions that the function `attst()` shall take, i.e., create an attestation through MPC-TLS SDK. Basically, you can define `attst()` within the `App()` function like this. Remember to call the `initAttestation()` function before generating attestations.
 
-```java
+```c++
 const attst = async () => {
     const sdkInstance = new MPCTLSJSSDK();
     
@@ -87,4 +87,10 @@ const attst = async () => {
 ```
 Now execute the code to deploy your dapp at localhost, and click the button on the web page to see what will happens. Note you shall log into the Binance website prior to execute the MPC-TLS protocol at the pop-up window.
 
-In our `src` folder, I create a simple demo that allows you to connect with your Metamask wallet, and then create a Binance asset attestation with that wallet address, and show the attestation result on the web page.
+In our `src` folder, I create a simple demo that allows you to connect with your Metamask wallet, and then create a Binance asset attestation with that wallet address, and show the attestation result on the web page. 
+
+Once you install the packages with `npm install` command, simply run:
+
+```c++
+npm run dev
+```
