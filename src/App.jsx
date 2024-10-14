@@ -13,11 +13,12 @@ function App() {
   const [chainName, setChainName] = useState();
   const [attestation, setAttestation] = useState();
   const [x, setX] = useState();
-
+  
+  const [sdkInstance, setSDKInstance] = useState();
   // add MPC-TLS here
 
   const attst = async () => {
-    const sdkInstance = new MPCTLSJSSDK();
+      // new SDK instance
     
     try {
       const initAttestaionResult = await sdkInstance.initAttestation(
@@ -26,12 +27,18 @@ function App() {
       );
      
       const startAttestaionResult = await sdkInstance.startAttestation({
-        chainID: 56,
+        chainID: 97,//BNB Chain Testnet
         walletAddress: address,
-        attestationTypeID: "9", //asset proof
-        assetsBalance: "50", //BNB Chain
+        attestationTypeID: '9', //binance asset proof
+        attestationParameters: ['50'], 
       });
       setAttestation(startAttestaionResult);
+
+      const verifyAttestationResult = sdkInstance.verifyAttestation(
+        startAttestaionResult
+      );
+      console.log("attestation local verification:" + verifyAttestationResult); // Output: true
+    
       console.log(attestation);
     } catch (e) {
       alert(`attestation failed,code: ${e.code} ,message: ${e.message}`);
@@ -52,13 +59,31 @@ function App() {
     console.log(address);
 
     setAddress(address);
-    
+    setSDKInstance(new MPCTLSJSSDK()); 
 
   };
+
+
+  const submitToChain = async () => {
+    try {
+      const sendToChainResult = await sdkInstance.sendToChain(
+        attestation,
+        window.ethereum
+      );
+      console.log(sendToChainResult); // Output: https://bascan.io/attestation/0x
+      console.log("SendToChain successfully!");
+    } catch (e) {
+      alert(`SendToChain failed,code: ${e.code} ,message: ${e.message}`);
+    }
+
+  }
 
   const handleClick = () => {
     setX(attestation);
+    submitToChain();
   };
+
+
 
   return (
     <div>
@@ -84,11 +109,9 @@ function App() {
 
       <div>
     
-
-     
       <textarea value={JSON.stringify(x, null, 2)} readOnly rows="8" cols="50"></textarea>
       <br /><br />
-
+      
   
       <button onClick={handleClick}>Show the attestation result</button>
     </div>

@@ -45,9 +45,19 @@ cd dapp1
 npm install
 ```
 
-Now edit the `App.jsx` file, and create a button on your web page to generate an attestation.
+Install the MPC-TLS JS SDK by npm.
 
 ```c++
+npm install --save @padolabs/mpctls-js-sdk
+```
+
+Now edit the `App.jsx` file, import the SDK, and create a button on your web page to generate an attestation. You can delete the sample code within `return()` code block at the beginning. 
+ 
+```c++
+
+import MPCTLSJSSDK from "@padolabs/mpctls-js-sdk"
+...
+
 function App() {
 ...
     return(
@@ -60,6 +70,7 @@ function App() {
 }
 ...
 ```
+
 
 Now you can define the actions that the function `attst()` shall take, i.e., create an attestation through MPC-TLS SDK. Basically, you can define `attst()` within the `App()` function like this. Remember to call the `initAttestation()` function before generating attestations.
 
@@ -74,10 +85,10 @@ const attst = async () => {
       );
      
       const startAttestaionResult = await sdkInstance.startAttestation({
-        chainID: 56, // BNB Chain
-        walletAddress: "0x",  // the wallet address of the subject
-        attestationTypeID: "9", // type ID "9" means it's an Binance asset proof
-        assetsBalance: "50", // a constant value to be compared with your asset balance: balance > 50
+        chainID: 97, // BNB Chain Testnet
+        walletAddress: '0x',  // the wallet address of the subject, you can use a hard-coded address for the test
+        attestationTypeID: '9', // type ID "9" means it's an Binance asset proof
+        attestationParameters: ['50'] //a constant value to be compared with your asset balance: balance > 50
       });      
     } catch (e) {
       alert(`attestation failed,code: ${e.code} ,message: ${e.message}`);
@@ -88,7 +99,7 @@ const attst = async () => {
 ```
 Now execute the code to deploy your dapp at localhost, and click the button on the web page to see what will happens. Note you shall log into the Binance website prior to execute the MPC-TLS protocol at the pop-up window.
 
-In our `src` folder, I create a simple demo that allows you to connect with your Metamask wallet, and then create a Binance asset attestation with that wallet address, and show the attestation result on the web page. 
+In our `src` folder, I create a simple demo that allows you to connect with your Metamask wallet, and then create a Binance asset attestation with that wallet address, and show the attestation result on the web page. The attestation will be submitted to BNB Chain Testnet with a returned URL in the browser console. 
 
 Once you install the packages with `npm install` command, simply run:
 
